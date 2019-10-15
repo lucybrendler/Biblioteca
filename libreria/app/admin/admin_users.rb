@@ -1,0 +1,49 @@
+ActiveAdmin.register AdminUser do
+  menu label: "usuarios"
+
+  permit_params :email, :password, :password_confirmation, :tipo_persona
+  permit_params :creado
+  index do
+    selectable_column
+    id_column
+    column ("Correo Electronico") { |admin_user| admin_user.email} 
+
+    column ("Creado"){ |admin_user| admin_user.created_at}
+  
+    actions
+  end
+
+  index do
+    selectable_column
+    id_column
+    column :email
+    column :created_at 
+    actions
+  end
+
+  filter :email
+  
+  filter :created_at 
+
+
+  form do |f|
+    f.inputs do
+      f.input :email
+      f.input :tipo_persona, label: "Profesor"
+      f.input :password , label:  "contraseña"
+      f.input :password_confirmation , label: "confirmar contraseña"
+      f.input :role, label: "Roles", :as => :select
+    end
+    f.actions
+  end
+  
+  filter :creado
+ show title: "Usuario"  do
+   attributes_table_for admin_user do
+     row("email") {admin_user.email}
+     row("Es profesor") {admin_user.tipo_persona}
+   end
+ end
+
+
+end
