@@ -26,10 +26,10 @@ gem 'activeadmin'
 gem 'activeadmin' # Plus integrations with: 
 gem 'devise'
 gem "active_skin"
-
+  #gem ' arctic_admin '
 gem 'bootstrap-sass' 
-gem 'active_bootstrap_skin'
- gem 'face_of_active_admin' 
+#gem 'active_bootstrap_skin'
+gem 'active_admin_flat_skin'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -68,7 +68,11 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 #gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem "active_material", github: "vigetlabs/active_material"
 
-
+#gem "active_material", github: "vigetlabs/active_material"
+  
 gem 'administrate'
+
+
+
+

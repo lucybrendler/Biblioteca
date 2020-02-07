@@ -1,23 +1,30 @@
 ActiveAdmin.register Autor do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-
-
   menu label: "Autor"
-  permit_params :nombre, :apellido , :activo
-  permit_params :creado
 
-#
-  # or
-  #
-  # permit_params do
-  #   permitted = [:nombre, :apellido]
-    #permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+   permit_params :nombre , :apellido  
   
+
+  filter :nombre
+  filter :apellido
+
+
+    index do
+      selectable_column
+   
+      column ("Nombre") { |autor| autor.nombre} 
+
+      column ("Apellido") { |autor| autor.apellido} 
+
+     actions
+   end
+  
+
+  show do
+   attributes_table_for autor do
+     row("Nombre") {autor.nombre}
+      row("Apellido") {autor.apellido}
+  
+  end
+ end
+
 end

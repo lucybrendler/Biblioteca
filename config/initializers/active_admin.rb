@@ -159,7 +159,7 @@ ActiveAdmin.setup do |config|
   #
   # config.before_action :do_something_awesome
 
-  # == Attribute Filters
+  # ==sAttribute Filters
   #
   # You can exclude possibly sensitive model attributes from being displayed,
   # added to forms, or exported by default by ActiveAdmin

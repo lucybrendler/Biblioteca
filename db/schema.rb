@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_10_001106) do
+ActiveRecord::Schema.define(version: 2020_01_15_001251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,22 +38,50 @@ ActiveRecord::Schema.define(version: 2019_10_10_001106) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "tipo_persona"
+    t.string "username"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "autors", force: :cascade do |t|
+  create_table "autor", force: :cascade do |t|
     t.string "nombre"
     t.string "apellido"
+    # t.datetime "created_at", null: false
+    # t.datetime "updated_at", null: false
+    # t.boolean "activo"
+  end
+
+  create_table "categoria", force: :cascade do |t|
+    t.string "descripcion"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "detalle_prestamos", force: :cascade do |t|
+    t.date "fecha"
+    t.integer "catidad_material"
+    t.integer "devuelto"
+    t.bigint "material_id"
+    t.bigint "prestamo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "fecha_devolucion"
+    t.integer "cantidad_devuelto"
+    t.index ["material_id"], name: "index_detalle_prestamos_on_material_id"
+    t.index ["prestamo_id"], name: "index_detalle_prestamos_on_prestamo_id"
   end
 
   create_table "editorials", force: :cascade do |t|
     t.string "descripcion"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "activo"
+    #t.boolean "activo"
+  end
+
+  create_table "libros", force: :cascade do |t|
+    t.string "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "materials", force: :cascade do |t|
@@ -63,6 +91,48 @@ ActiveRecord::Schema.define(version: 2019_10_10_001106) do
     t.string "nro_material"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "activo"
+    t.bigint "autor_id"
+    t.bigint "editorial_id"
+    t.bigint "categoria_id"
+    t.bigint "tipo_material_id"
+    t.index ["autor_id"], name: "index_materials_on_autor_id"
+    t.index ["categoria_id"], name: "index_materials_on_categoria_id"
+    t.index ["editorial_id"], name: "index_materials_on_editorial_id"
+    t.index ["tipo_material_id"], name: "index_materials_on_tipo_material_id"
   end
 
+  create_table "mermas", force: :cascade do |t|
+    t.date "fecha"
+    t.integer "cantidad"
+    t.bigint "material_id"
+    #t.datetime "created_at", null: false
+    #t.datetime "updated_at", null: false
+    t.index ["material_id"], name: "index_mermas_on_material_id"
+  end
+
+  create_table "prestamos", force: :cascade do |t|
+    t.date "fecha"
+    #t.datetime "created_at", null: false
+    #t.datetime "updated_at", null: false
+    t.bigint "admin_user_id"
+    t.date "fecha_dev"
+    t.boolean "devuelto"
+    t.index ["admin_user_id"], name: "index_prestamos_on_admin_user_id"
+  end
+
+  create_table "tipo_materials", force: :cascade do |t|
+    t.string "descripcion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "detalle_prestamos", "materials"
+  add_foreign_key "detalle_prestamos", "prestamos"
+  add_foreign_key "materials", "autors"
+  add_foreign_key "materials", "categoria", column: "categoria_id"
+  add_foreign_key "materials", "editorials"
+  add_foreign_key "materials", "tipo_materials"
+  add_foreign_key "mermas", "materials"
+  add_foreign_key "prestamos", "admin_users"
 end
